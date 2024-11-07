@@ -36,6 +36,7 @@ class TestCase(unittest.TestCase):
       reg.summary()
 
       output = system.stdout.getvalue()
+      print("Summary Output:", output)  # Debugging line
       system.stdout = stdout
 
       labels = bool(re.findall(r'[Cc]oef.*[Ss]t.*[Zz].*[Pp].*', output))
@@ -45,3 +46,5 @@ class TestCase(unittest.TestCase):
       intercept = bool(re.findall(r'intercept.*\d+.*\d+.*\d+.*\d+.*', output))
 
       self.assertTrue(labels&sex&age&educ&intercept, "Your table is not correctly formatted.")
+
+

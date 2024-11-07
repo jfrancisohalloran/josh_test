@@ -29,6 +29,8 @@ class TestCase(unittest.TestCase):
       y = data.loc[:100, 'white']
       reg = RegressionModel(x, y, create_intercept=True, regression_type='logit')
       reg.fit_model()
+      print("Regression Results:", reg.results)  # Debugging line
+
 
       sex = {'coefficient': -1.1229156890097627,
       'standard_error': 0.39798772782618025,
