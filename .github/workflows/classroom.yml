@@ -1,0 +1,49 @@
+name: Autograding Tests
+'on':
+- workflow_dispatch
+- repository_dispatch
+- push
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+          python-version: '3.9'
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Install Dependencies
+      run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+    - name: Test Logit Values
+      id: test-logit-values
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Logit Values
+        setup-command: ''
+        command: python -m unittest tests/testLogitValues.py
+        timeout: 3
+        max-score: 3
+    - name: Test Output Table
+      id: test-output-table
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Output Table
+        setup-command: ''
+        command: python -m unittest tests/testOutputTable.py
+        timeout: 3
+        max-score: 3
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST-LOGIT-VALUES_RESULTS: "${{steps.test-logit-values.outputs.result}}"
+        TEST-OUTPUT-TABLE_RESULTS: "${{steps.test-output-table.outputs.result}}"
+      with:
+        runners: test-logit-values,test-output-table

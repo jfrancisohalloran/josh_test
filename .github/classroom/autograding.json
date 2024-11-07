@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "Test Logit Values",
+      "setup": "",
+      "run": "python -m unittest tests/testLogitValues.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 3
+    },
+    {
+      "name": "Test Output Table",
+      "setup": "",
+      "run": "python -m unittest tests/testOutputTable.py",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 3
+    }
+  ]
+}
